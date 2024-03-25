@@ -12,7 +12,7 @@ import { Toaster } from '@/components/ui/sonner'
 import './globals.css'
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
 const RootLayout: NextPage<React.PropsWithChildren> = ({ children }) => (
-  <html lang="en" className="dark" suppressHydrationWarning>
+  <html lang="en" suppressHydrationWarning>
     <body className={inter.variable}>
       <Provider>
         <Header />

@@ -13,15 +13,57 @@ datasource db {
 model User {
   id       String @id @default(auto()) @map("_id") @db.ObjectId
   email    String @unique
-  name     String
-  password String
-  posts    Post[]
+  name     String @db.String
+  image    String? @db.String
+  password String @db.String
+
+  products Product[]
+  carts    Cart[]
 }
 
-model Post {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  content   String
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  String   @db.ObjectId
-  createdAt DateTime @default(now())
+model Product {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  name        String @db.String
+  description String @db.String
+  image       String @db.String
+
+  price   Float @db.Double
+  stock   Int   @db.Int
+  saleOff Float @db.Double
+
+  seller   User   @relation(fields: [sellerId], references: [id])
+  sellerId String @db.ObjectId
+
+  carts CartItem[]
+}
+
+model CartItem {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  product   Product @relation(fields: [productId], references: [id])
+  productId String  @db.ObjectId
+
+  cart   Cart   @relation(fields: [cartId], references: [id])
+  cartId String @db.ObjectId
+
+  quantity Int @db.Int
+}
+
+model Cart {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @db.ObjectId
+
+  items CartItem[]
+  total Float      @db.Double
+
+  Status Status @default(NEW)
+}
+
+enum Status {
+  NEW
+  PENDING
+  COMPLETED
+  CANCELLED
 }
