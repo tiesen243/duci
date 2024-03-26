@@ -2,6 +2,7 @@ import swagger from '@elysiajs/swagger'
 import { Elysia } from 'elysia'
 
 import { userRoute } from '@/server/routes/user.route'
+import { categoryRoute } from '@/server/routes/category.route'
 
 export const app = new Elysia({ prefix: '/api/elysia' })
   // Plugins
@@ -9,9 +10,10 @@ export const app = new Elysia({ prefix: '/api/elysia' })
     swagger({
       path: '/docs',
       documentation: {
-        info: { title: 'Next.js + ElysiaJS', version: '1.0.0' },
+        info: { title: 'Duci API Documents', version: '1.0.0' },
         tags: [
           { name: 'User', description: 'User operations' },
+          { name: 'Category', description: 'Category operations' },
           { name: 'Post', description: 'Post operations' },
         ],
       },
@@ -39,6 +41,7 @@ export const app = new Elysia({ prefix: '/api/elysia' })
 
   // Routes
   .use(userRoute)
+  .use(categoryRoute)
 
   .compile()
 
